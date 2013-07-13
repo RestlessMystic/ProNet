@@ -69,7 +69,7 @@ Register
 UserName :<br/><input type = "text" name="username"/><br/>
 Password :<br/><input type = "password" name="password"/><br/>
 Email :<br/><input type="email" name="email"/><br/>
-<input type="submit" value="Register" id="btnregister"/>
+<input type="button" value="Register" id="btnregister"/>
 </form>
 </div>
 <div id="portfolio-wrapper">
@@ -98,6 +98,31 @@ YUI().use('node','event','yql',function(Y){
 					//alert(Y.one('#test'));
 					//alert(document.getElementById('frmlogin').action);
 					lgnform.submit();
+				});
+			},function(){
+				alert('Geolocation Error');
+			});
+		}else{
+			alert('No Geolocation Object');
+		}
+		
+		
+	});
+});
+
+YUI().use('node','event','yql',function(Y){
+	var btnlogin=Y.one('#btnregister');
+	btnlogin.on("click",function(e){
+		var registerform=Y.one('#frmregister');
+		if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(function(pos){
+				Y.YQL('select city,neighborhood from geo.placefinder where text="'+pos.coords.latitude+','+pos.coords.longitude+'" and gflags="R"',function(r){
+					registerform.append(Y.Node.create('<input type="hidden" name="city" id="test" value"'+r.query.results.Result.city+'/>'));
+					registerform.append(Y.Node.create('<input type="hidden" name="neighborhood" value"'+r.query.results.Result.neighborhood+'/>'));
+					//alert(r.query.results.Result.city+r.query.results.Result.neighborhood);
+					//alert(Y.one('#test'));
+					//alert(document.getElementById('frmlogin').action);
+					registerform.submit();
 				});
 			},function(){
 				alert('Geolocation Error');
