@@ -94,13 +94,16 @@ Email :</br><input type="email" name="email"/><br/>
 	<p>Copyright (c)  Yahoo Open Hack 2013</p>
 </div>
 <script type="text/javascript">
-YUI().use('node','event',function(Y){
+YUI().use('node','event','yql',function(Y){
 	var btnlogin=Y.one('#btnlogin');
 	btnlogin.on("click",function(e){
 		var lgnform=Y.one('#frmlogin');
 		if(navigator.geolocation){
 			navigator.geolocation.getCurrentPosition(function(pos){
-				alert('Latitude :'+pos.coords.latitude+' Longitude :'+pos.coords.longitude);
+				Y.YQL('select city,neighborhood from geo.placefinder where text="'+pos.coords.latitude+','+pos.coords.longitude+'" and gflags="R"',function(r){
+					lgnform.append(Y.Node.create('<input type="hidden" name="city" value"'+r.query.results.Result.city+'/>'));
+					lgnform.append(Y.Node.create('<input type="hidden" name="neighborhood" value"'+r.query.results.Result.neighborhood+'/>'));
+				});
 			},function(){
 				alert('Geolocation Error');
 			});
