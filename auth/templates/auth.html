@@ -51,26 +51,73 @@ Released   : 20130623
 			<p>Welcome to <strong>proNet</strong>, a location based Social Network that lets you connect to people around you with the same professional interests. .Whenever you are new to a place, just check in to proNet and never feel alone again, ever. Sign up, and have fun. :) </p>
 			<div id="two-column">
 				<div id="tbox1">
-					<div class="title">
-						<h2>Log In</h2>
-					</div>
-<form action="/login/" method="post" id="frmlogin" name="frmlogin">
-{% csrf_token %}
-Username :<br/>
-<input type="text" name="username"/><br/>
-Password :<br/><input type="password" name="password"/><br/>
-<input type="button" value="Log In" id="btnlogin"/>
-</form>
-<h3>
-Register
-</h3>
-<form action="/register/" method="post" id="frmregister" name="frmregister">
-{% csrf_token %}
-UserName :<br/><input type = "text" name="username"/><br/>
-Password :<br/><input type = "password" name="password"/><br/>
-Email :<br/><input type="email" name="email"/><br/>
-<input type="button" value="Register" id="btnregister"/>
-</form>
+				<table width="848" border="0">
+				  <tr>
+				    <td width="293">					
+                    	<div class="title">
+                    	  <h2>Log In</h2>
+						</div>
+					
+                        <form action="/login/" method="post" id="frmlogin">
+                        {% csrf_token %}<br />
+Username :</br>
+                        <input type="text" name="username"><br>
+                        Password :</br><input type="password" name="password"><br>
+                        <input type="submit" value="Log In" id="btnlogin"/>
+                        </form>
+                   	</td>
+				    <td width="545"><table width="545" border="0">
+				      <tr>
+				        <td width="301">
+                            <div class="title">
+                              <h2>Sign Up</h2>
+                            </div>
+                            <form action="/register/" method="post">
+                            {% csrf_token %}
+                              <br />
+                              UserName :</br><input type = "text" name="username"/><br/>
+                            Password :</br><input type = "password" name="password"/><br/>
+                            Email :</br><input type="email" name="email"/><br/>
+                            <input type="submit" value="Register" id="loginid"/>
+                            </form>
+                        
+                        </td>
+				        <td width="234" align="left">
+                       	  <!--iframe width="200" height="200" src="options.html"></iframe-->
+						  
+							<input name="Open Source Technologies" type="checkbox" value="IsInterestedB" id="Open Source Technologies" />
+                        	Open Source Technologies<br />
+                            <input name="Linux/Unix" type="checkbox" value="IsInterestedC" id="Linux/Unix" />
+                        	Linux/Unix<br />
+                            <input name="Web Development" type="checkbox" value="IsInterestedD" id="Web Development" />
+                        	Web Development<br />
+                            <input name="Frameworks/CMS" type="checkbox" value="IsInterestedE" id="Frameworks/CMS" />
+                        	Frameworks/CMS<br />
+                            <input name="Hacking" type="checkbox" value="IsInterestedF" id="Hacking" />
+                        	Hacking<br />
+                            <input name="Competitive Programming" type="checkbox" value="IsInterestedG" id="Competitive Programming" />
+                        	Competitive Programming<br />
+                            <input name="Hardware" type="checkbox" value="IsInterestedH" id="Hardware" />
+                        	Hardware<br />
+                            <input name="Business Development" type="checkbox" value="IsInterestedI" id="Business Development" />
+                        	Business Development<br />
+                            <input name="Cyber Security" type="checkbox" value="IsInterestedJ" id="Cyber Security" />
+                        	Cyber Security<br />
+						</td>
+			          </tr>
+				      </table>
+                    	
+                    </td>
+			      </tr>
+</table>
+
+
+		
+				</div>
+			</div>
+		</div>
+
+	</div>
 </div>
 <div id="portfolio-wrapper">
 	<div id="portfolio" class="container">
@@ -84,7 +131,6 @@ Email :<br/><input type="email" name="email"/><br/>
 	<p>Copyright (c)  Yahoo Open Hack 2013</p>
 </div>
 <script type="text/javascript">
-//alert(document.getElementById('frmlogin').action);
 YUI().use('node','event','yql',function(Y){
 	var btnlogin=Y.one('#btnlogin');
 	btnlogin.on("click",function(e){
@@ -92,12 +138,8 @@ YUI().use('node','event','yql',function(Y){
 		if(navigator.geolocation){
 			navigator.geolocation.getCurrentPosition(function(pos){
 				Y.YQL('select city,neighborhood from geo.placefinder where text="'+pos.coords.latitude+','+pos.coords.longitude+'" and gflags="R"',function(r){
-					lgnform.append(Y.Node.create('<input type="hidden" name="city" id="test" value"'+r.query.results.Result.city+'/>'));
+					lgnform.append(Y.Node.create('<input type="hidden" name="city" value"'+r.query.results.Result.city+'/>'));
 					lgnform.append(Y.Node.create('<input type="hidden" name="neighborhood" value"'+r.query.results.Result.neighborhood+'/>'));
-					//alert(r.query.results.Result.city+r.query.results.Result.neighborhood);
-					//alert(Y.one('#test'));
-					//alert(document.getElementById('frmlogin').action);
-					lgnform.submit();
 				});
 			},function(){
 				alert('Geolocation Error');
@@ -105,40 +147,10 @@ YUI().use('node','event','yql',function(Y){
 		}else{
 			alert('No Geolocation Object');
 		}
-		
-		
-	});
-});
 
-YUI().use('node','event','yql',function(Y){
-	var btnlogin=Y.one('#btnregister');
-	btnlogin.on("click",function(e){
-		var registerform=Y.one('#frmregister');
-		if(navigator.geolocation){
-			navigator.geolocation.getCurrentPosition(function(pos){
-				Y.YQL('select city,neighborhood from geo.placefinder where text="'+pos.coords.latitude+','+pos.coords.longitude+'" and gflags="R"',function(r){
-					registerform.append(Y.Node.create('<input type="hidden" name="city" id="test" value"'+r.query.results.Result.city+'/>'));
-					registerform.append(Y.Node.create('<input type="hidden" name="neighborhood" value"'+r.query.results.Result.neighborhood+'/>'));
-					//alert(r.query.results.Result.city+r.query.results.Result.neighborhood);
-					//alert(Y.one('#test'));
-					//alert(document.getElementById('frmlogin').action);
-					registerform.submit();
-				});
-			},function(){
-				alert('Geolocation Error');
-			});
-		}else{
-			alert('No Geolocation Object');
-		}
-		
-		
+		//lgnform.append(Y.Node.create('<input type="hidden" name="latitu'))
 	});
 });
-/*YUI().use('event',function(Y){
-	Y.one('#btnlogin')on("click",function(e){
-		Y.one('#frmlogin').submit();
-	});
-});*/
 </script>
 </body>
 </html>
