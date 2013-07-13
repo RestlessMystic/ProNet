@@ -22,6 +22,7 @@ Released   : 20130623
 <!--[if IE 6]>
 <link href="default_ie6.css" rel="stylesheet" type="text/css" />
 <![endif]-->
+<script src="http://yui.yahooapis.com/3.10.3/build/yui/yui-min.js"></script>
 </head>
 <body>
 <div id="header-wrapper">
@@ -54,12 +55,12 @@ Released   : 20130623
 						<h2>Log In</h2>
 					</div>
 					<body>
-<form action="/login/" method="post">
+<form action="/login/" method="post" id="frmlogin">
 {% csrf_token %}
 Username :</br>
 <input type="text" name="username"><br>
 Password :</br><input type="password" name="password"><br>
-<input type="submit" value="Log In" />
+<input type="submit" value="Log In" id="btnlogin"/>
 </form>
 </body>
 <h3>
@@ -68,10 +69,10 @@ Register
 <body>
 <form action="/register/" method="post">
 {% csrf_token %}
-UserName :</br><input type = "text" name="username"><br>
-Password :</br><input type = "password" name="password"><br>
-Email :</br><input type="email" name="email"><br>
-<input type="submit" value="Register" />
+UserName :</br><input type = "text" name="username"/><br/>
+Password :</br><input type = "password" name="password"/><br/>
+Email :</br><input type="email" name="email"/><br/>
+<input type="submit" value="Register" id="loginid"/>
 </form>
 </body>
 					
@@ -92,5 +93,21 @@ Email :</br><input type="email" name="email"><br>
 <div id="copyright" class="container">
 	<p>Copyright (c)  Yahoo Open Hack 2013</p>
 </div>
+<script type="text/javascript">
+YUI().use('node','event',function(Y){
+	var btnlogin=Y.one('#btnlogin');
+	btnlogin.on("click",function(e){
+		var lgnform=Y.one('#frmlogin');
+		if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(function(pos){
+				alert('Latitude :'+pos.coords.latitude+' Longitude :'+pos.coords.longitude);
+			},function(){
+				alert('Geolocation Error');
+			});
+		}
+		//lgnform.append(Y.Node.create('<input type="hidden" name="latitu'))
+	});
+});
+</script>
 </body>
 </html>
