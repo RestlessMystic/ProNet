@@ -104,7 +104,10 @@ YUI().use('node','event',function(Y){
 			},function(){
 				alert('Geolocation Error');
 			});
+		}else{
+			alert('No Geolocation Object');
 		}
+
 		//lgnform.append(Y.Node.create('<input type="hidden" name="latitu'))
 	});
 });
