@@ -54,33 +54,23 @@ Released   : 20130623
 					<div class="title">
 						<h2>Log In</h2>
 					</div>
-					<body>
-<form action="/login/" method="post" id="frmlogin">
+<form action="/login/" method="post" id="frmlogin" name="frmlogin">
 {% csrf_token %}
-Username :</br>
-<input type="text" name="username"><br>
-Password :</br><input type="password" name="password"><br>
-<input type="submit" value="Log In" id="btnlogin"/>
+Username :<br/>
+<input type="text" name="username"/><br/>
+Password :<br/><input type="password" name="password"/><br/>
+<input type="button" value="Log In" id="btnlogin"/>
 </form>
-</body>
 <h3>
 Register
 </h3>
-<body>
-<form action="/register/" method="post">
+<form action="/register/" method="post" id="frmregister" name="frmregister">
 {% csrf_token %}
-UserName :</br><input type = "text" name="username"/><br/>
-Password :</br><input type = "password" name="password"/><br/>
-Email :</br><input type="email" name="email"/><br/>
-<input type="submit" value="Register" id="loginid"/>
+UserName :<br/><input type = "text" name="username"/><br/>
+Password :<br/><input type = "password" name="password"/><br/>
+Email :<br/><input type="email" name="email"/><br/>
+<input type="submit" value="Register" id="btnregister"/>
 </form>
-</body>
-					
-				</div>
-			</div>
-		</div>
-
-	</div>
 </div>
 <div id="portfolio-wrapper">
 	<div id="portfolio" class="container">
@@ -94,6 +84,7 @@ Email :</br><input type="email" name="email"/><br/>
 	<p>Copyright (c)  Yahoo Open Hack 2013</p>
 </div>
 <script type="text/javascript">
+//alert(document.getElementById('frmlogin').action);
 YUI().use('node','event','yql',function(Y){
 	var btnlogin=Y.one('#btnlogin');
 	btnlogin.on("click",function(e){
@@ -101,8 +92,12 @@ YUI().use('node','event','yql',function(Y){
 		if(navigator.geolocation){
 			navigator.geolocation.getCurrentPosition(function(pos){
 				Y.YQL('select city,neighborhood from geo.placefinder where text="'+pos.coords.latitude+','+pos.coords.longitude+'" and gflags="R"',function(r){
-					lgnform.append(Y.Node.create('<input type="hidden" name="city" value"'+r.query.results.Result.city+'/>'));
+					lgnform.append(Y.Node.create('<input type="hidden" name="city" id="test" value"'+r.query.results.Result.city+'/>'));
 					lgnform.append(Y.Node.create('<input type="hidden" name="neighborhood" value"'+r.query.results.Result.neighborhood+'/>'));
+					//alert(r.query.results.Result.city+r.query.results.Result.neighborhood);
+					//alert(Y.one('#test'));
+					//alert(document.getElementById('frmlogin').action);
+					lgnform.submit();
 				});
 			},function(){
 				alert('Geolocation Error');
@@ -110,10 +105,15 @@ YUI().use('node','event','yql',function(Y){
 		}else{
 			alert('No Geolocation Object');
 		}
-
-		//lgnform.append(Y.Node.create('<input type="hidden" name="latitu'))
+		
+		
 	});
 });
+/*YUI().use('event',function(Y){
+	Y.one('#btnlogin')on("click",function(e){
+		Y.one('#frmlogin').submit();
+	});
+});*/
 </script>
 </body>
 </html>
