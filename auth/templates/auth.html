@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : NotableFlower 
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20130623
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ProNet</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
+<link href="{{STATIC_URL}}default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="{{STATIC_URL}}fonts.css" rel="stylesheet" type="text/css" media="all" />
+<!--[if IE 6]>
+<link href="default_ie6.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+</head>
+<body>
+<div id="header-wrapper">
+	<div id="header-wrapper2">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#" class="icon icon-leaf"><span>pro<font color="#000000">Net</font></span></a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item"><a href="#" accesskey="1" title="">Home</a></li>
+					<li><a href="#" accesskey="2" title="">Search</a></li>
+					<li><a href="#" accesskey="5" title="">Contact Us</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="wrapper">
+	<div id="page" class="container">
+		<div id="content">
+			<div class="title">
+				<h2>Welcome to proNet</h2>
+				{{state}}<br/>
+				<span class="byline">Location Based Social Network in the domain of Professional Interests</span> </div>
+			<p>Welcome to <strong>proNet</strong>, a location based Social Network that lets you connect to people around you with the same professional interests. .Whenever you are new to a place, just check in to proNet and never feel alone again, ever. Sign up, and have fun. :) </p>
+			<div id="two-column">
+				<div id="tbox1">
+					<div class="title">
+						<h2>Log In</h2>
+					</div>
+					<body>
+<form action="/login/" method="post">
+{% csrf_token %}
+Username :</br>
+<input type="text" name="username"><br>
+Password :</br><input type="password" name="password"><br>
+<input type="submit" value="Log In" />
+</form>
+</body>
+<h3>
+Register
+</h3>
+<body>
+<form action="/register/" method="post">
+{% csrf_token %}
+UserName :</br><input type = "text" name="username"><br>
+Password :</br><input type = "password" name="password"><br>
+Email :</br><input type="email" name="email"><br>
+<input type="submit" value="Register" />
+</form>
+</body>
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<div id="portfolio-wrapper">
+	<div id="portfolio" class="container">
+		<div class="title">
+			<h2>proNet</h2>
+		</div>
+		<p class="description">Never be alone in a new place, ever..</p>
+	</div>
+</div>
+<div id="copyright" class="container">
+	<p>Copyright (c)  Yahoo Open Hack 2013</p>
+</div>
+</body>
+</html>
