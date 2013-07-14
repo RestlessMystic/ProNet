@@ -17,9 +17,9 @@ Released   : 20130623
 <meta name="keywords" content="" />
 <meta name="description" content="" />
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
-<link href="C:\Users\Rakesh\Yahoo Hackathon\auth\static\default.css.css" rel="stylesheet" type="text/css" media="all" />
-<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
 
+<link href="{{STATIC_URL}}default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="{{STATIC_URL}}fonts.css" rel="stylesheet" type="text/css" media="all" />
 
 <link href="default.css" rel="stylesheet" type="text/css" media="all" />
 <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
@@ -36,9 +36,9 @@ Released   : 20130623
 			</div>
 			<div id="menu">
 				<ul>
-					<li class="current_page_item"><a href="#" accesskey="1" title="">Home</a></li>
+					<li><a href="#" accesskey="1" title="">Home</a></li>
 					<li><a href="#" accesskey="2" title="">Search</a></li>
-					<li><a href="#" accesskey="5" title="">Contact Us</a></li>
+					<li class="current_page_item"><a href="#" accesskey="5" title="">Contact Us</a></li>
 				</ul>
 			</div>
 		</div>
@@ -50,38 +50,36 @@ Released   : 20130623
 			<div class="title">
 				<h2>Welcome to proNet</h2>
 				<span class="byline">Location Based Social Network in the domain of Professional Interests</span> </div>
-			<p>Welcome to <strong>proNet</strong>, a location based Social Network that lets you connect to people around you with the same professional interests. .Whenever you are new to a place, just check in to proNet and never feel alone again, ever. Sign up, and have fun. :) </p>
+
 			<div id="two-column">
-				<div id="tbox1">
-					<div class="title">
-						<h2>Log In</h2>
-					</div>
-					<body>
-<form action="/login/" method="post">
-{% csrf_token %}
-Username :</br>
-<input type="text" name="username"><br>
-Password :</br><input type="password" name="password"><br>
-<input type="submit" value="Log In" />
-</form>
-</body>
-<h3>
-Register
-</h3>
-<body>
-<form action="/register/" method="post">
-{% csrf_token %}
-UserName :</br><input type = "text" name="username"><br>
-Password :</br><input type = "password" name="password"><br>
-Email :</br><input type="email" name="email"><br>
-<input type="submit" value="Register" />
-</form>
-</body>
+			<p>
+
+			<div id="result" style="width:600px;">
+				<table name="personInfo" width="100%">
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+					</tr>
+					<tr>
+						<td>Rakesh</td>
+						<td><a href="mailto:rakeshnitcalicut@gmail.com">rakeshnitc@gmail.com</a></td>
+					</tr>
 					
-				</div>
+					<tr>
+						<td>Govind</td>
+						<td><a href="mailto:govindmaheswaran@gmail.com">govindmaheswaran@gmail.com</a></td>
+					</tr>
+					
+					<tr>
+						<td>Tarun</td>
+						<td><a href="mailto:tarunjain_cs@yahoo.com">rakeshnitc@gmail.com</a></td>
+					</tr>
+					
+				</table>
+			</div>
+		</p>
 			</div>
 		</div>
-
 	</div>
 </div>
 <div id="portfolio-wrapper">

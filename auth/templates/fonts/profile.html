@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : NotableFlower 
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20130623
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ProNet | Profile</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
+<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+<!--[if IE 6]>
+<link href="default_ie6.css" rel="stylesheet" type="text/css" />
+<![endif]-->
+<script src="http://yui.yahooapis.com/3.10.3/build/yui/yui-min.js"></script>
+</head>
+<body>
+<div id="header-wrapper">
+	<div id="header-wrapper2">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#" class="icon icon-leaf"><span>pro<font color="#000000">Net</font></span></a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item"><a href="#" accesskey="1" title="">Home</a></li>
+					<li><a href="#" accesskey="2" title="">Edit Interests</a></li>
+					<li><a href="#" accesskey="5" title="">Logout</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="wrapper">
+	<div id="page" class="container">
+		<div id="content">
+			<div class="title">
+				<h3>Hello, <!--a href="kanji.htm">DJANGO WELCOME MESSAGE GOES HERE</a-->, Welcome to proNet</h3>
+				<span class="byline">Location Based Social Network in the domain of Professional Interests</span> </div>
+			<center>
+            <table width="500" border="0">
+  <tr>
+    <td>Name</td>
+    <td>:</td>
+    <td><b>Govind Maheswaran</b></td>
+  </tr>
+  <tr>
+    <td>Interests</td>
+    <td>:</td>
+    <td>
+    	Chaya<br />Parippuvada<br />Kanji<br />Chappathi<br />
+        
+    
+    </td>
+  </tr>
+  
+</table>
+</center>
+			<div id="two-column">
+				<div id="tbox1">
+
+					</ul>
+					<a href="#" class="icon icon-file-alt button">People around me</a> </div>
+				<div id="tbox2">
+					
+					</ul>
+					<a href="javascript:getlatlong();" class="icon icon-ok button" id="checkIn">CheckIn</a> </div>
+			</div>
+			<form>
+				<input id="csrf_token" value="{{ csrf_token }}"/>
+			</form>
+		</div>
+		<!--div id="sidebar">
+			<div class="box1">
+				<div class="title">
+					<h2>Mauris vulputate</h2>
+				</div>
+				<ul class="style2">
+					<li><a href="#">Semper mod quis eget mi dolore</a></li>
+					<li><a href="#">Quam turpis feugiat sit dolor</a></li>
+					<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
+					<li><a href="#">Consequat etiam lorem phasellus</a></li>
+					<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
+					<li><a href="#">Semper mod quisturpis nisi</a></li>
+				</ul>
+			</div>
+			<div class="box2">
+				<div class="title">
+					<h2>Integer gravida</h2>
+				</div>
+				<ul class="style2">
+					<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
+					<li><a href="#">Ornare in hendrerit in lectus</a></li>
+					<li><a href="#">Semper mod quis eget mi dolore</a></li>
+					<li><a href="#">Quam turpis feugiat sit dolor</a></li>
+					<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
+					<li><a href="#">Semper mod quisturpis nisi</a></li>
+					<li><a href="#">Consequat etiam lorem phasellus</a></li>
+				</ul>
+			</div>
+		</div-->
+	</div>
+</div>
+<div id="portfolio-wrapper">
+	<div id="portfolio" class="container">
+		<div class="title">
+			<h2>proNet</h2>
+		</div>
+		<p class="description">Never be alone in a new place, ever..</p>
+	</div>
+</div>
+<div id="copyright" class="container">
+	<p>Copyright (c)  Yahoo Open Hack 2013</p>
+</div>
+<script type="text/javascript">
+function getlatlong(){
+YUI().use('node','event','yql',function(Y){
+	var btnlogin=Y.one('#checkIn');
+	if(navigator.geolocation){
+		navigator.geolocation.getCurrentPosition(function(pos){
+			Y.YQL('select city,neighborhood from geo.placefinder where text="'+pos.coords.latitude+','+pos.coords.longitude+'" and gflags="R"',function(r){
+				//alert(r);
+					var form = document.createElement('form');
+    				form.action = '/login/';
+    				form.method = 'POST';
+
+    				var input = document.createElement('input');
+            		input.type = 'hidden';
+            		input.name = 'city';
+            		input.value = r.query.results.Result.city;
+            		form.appendChild(input);
+
+            		var input2 = document.createElement('input');
+            		input2.type = 'hidden';
+            		input2.name = 'neighborhood';
+            		input2.value = r.query.results.Result.neighborhood;
+            		form.appendChild(input2);
+        			
+        			form.appendChild(document.getElementById('csrf_token'));
+
+        			document.body.appendChild(form);
+    				form.submit();
+					//nform.append(Y.Node.create('<input type="hidden" name="city" value"'+r.query.results.Result.city+'/>'));
+					//nform.append(Y.Node.create('<input type="hidden" name="neighborhood" value"'+r.query.results.Result.neighborhood+'/>'));
+					//nform.submit();
+				});
+			},function(){
+				alert('Geolocation Error');
+			});
+		}else{
+			alert('No Geolocation Object');
+		}
+
+		//lgnform.append(Y.Node.create('<input type="hidden" name="latitu'))
+	});
+}
+</script>
+</body>
+</html>

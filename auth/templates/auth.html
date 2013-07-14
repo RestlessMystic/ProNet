@@ -19,6 +19,8 @@ Released   : 20130623
 <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
 <link href="{{STATIC_URL}}default.css" rel="stylesheet" type="text/css" media="all" />
 <link href="{{STATIC_URL}}fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+
 <!--[if IE 6]>
 <link href="default_ie6.css" rel="stylesheet" type="text/css" />
 <![endif]-->
@@ -34,8 +36,8 @@ Released   : 20130623
 			<div id="menu">
 				<ul>
 					<li class="current_page_item"><a href="#" accesskey="1" title="">Home</a></li>
-					<li><a href="#" accesskey="2" title="">Search</a></li>
-					<li><a href="#" accesskey="5" title="">Contact Us</a></li>
+					<li><a href="profile" accesskey="2" title="">Search</a></li>
+					<li><a href="contactaround.html" accesskey="5" title="">Contact Us</a></li>
 				</ul>
 			</div>
 		</div>
@@ -63,7 +65,7 @@ Released   : 20130623
 Username :</br>
                         <input type="text" name="username"><br>
                         Password :</br><input type="password" name="password"><br>
-                        <input type="submit" value="Log In" id="btnlogin"/>
+                        <input type="submit" value="Log In" name = "Log in" id="btnlogin"/>
                         </form>
                    	</td>
 				    <td width="545"><table width="545" border="0">
@@ -72,58 +74,61 @@ Username :</br>
                             <div class="title">
                               <h2>Sign Up</h2>
                             </div>
-                            <form action="/register/" method="post">
+                            <form action="/register/" method="post" id = "frmregister">
                             {% csrf_token %}
                               <br />
-                              UserName :</br><input type = "text" name="username"/><br/>
+                            UserName :</br><input type = "text" name="username"/><br/>
                             Password :</br><input type = "password" name="password"/><br/>
                             Email :</br><input type="email" name="email"/><br/>
-                            <input type="submit" value="Register" id="loginid"/>
-                            </form>
+                            
+                            
                         
                         </td>
 				        <td width="234" align="left">
-                       	  <!--iframe width="200" height="200" src="options.html"></iframe-->
 						  
 				            <table>
+								<th>
+									<td><b>Proficiency</b>(1-10)</td>
+								</th>
                             	<tr>
                                 <td>Open Source Technologies</td>
-                                <td><input name="OpenSource" type="text" value="" />	</td>
+                                <td><input name="IsInterestedA" type="text"  />	</td>
                                 </tr>
                                 <tr>
                                 <td>Linux/Unix</td>
-                                <td><input name="Linux" type="text" value="" />		</td>
+                                <td><input name="IsInterestedB" type="text" value="" />		</td>
                                 </tr>
                                 <tr>
                                 <td>Web Development</td>
-                                <td><input name="WebDevelopment" type="text" value="" />		</td>
+                                <td><input name="IsInterestedC" type="text" value="" />		</td>
                                 </tr>
                                 <tr>
                                 <td>Frameworks/CMS</td>
-                                <td><input name="CMS" type="text" value="" />		</td>
+                                <td><input name="IsInterestedD" type="text" value="" />		</td>
                                 </tr>
                                 <tr>
                                 <td>Hacking</td>
-                                <td><input name="Hacking" type="text" value="" />		</td>
+                                <td><input name="IsInterestedE" type="text" value="" />		</td>
                                 </tr>
                                 <tr>
                                 <td>Competitive Programming</td>
-                                <td><input name="Competitive" type="text" value="" />		</td>
+                                <td><input name="IsInterestedF" type="text" value="" />		</td>
                                 </tr>
                                 <tr>
                                 <td>Hardware</td>
-                                <td><input name="Hardware" type="text" value="" />		</td>
+                                <td><input name="IsInterestedG" type="text" value="" />		</td>
                                 </tr>
                                 <tr>
                                 <td>Business Development</td>
-                                <td><input name="BusinessDevelopment" type="text" value="" />		</td>
+                                <td><input name="IsInterestedH" type="text" value="" />		</td>
                                 </tr>
                                 <tr>
                                 <td>Cyber Security</td>
-                                <td><input name="CyberSecurity" type="text" value="" />		</td>
+                                <td><input name="IsInterestedI" type="text" value="" />		</td>
                                 </tr>
                             </table>
-
+							<input type="submit" value="Register" name = "Register"id="btnregister"/>
+							</form>
 						</td>
 			          </tr>
 				      </table>
@@ -155,12 +160,15 @@ Username :</br>
 YUI().use('node','event','yql',function(Y){
 	var btnlogin=Y.one('#btnlogin');
 	btnlogin.on("click",function(e){
+		if(validate('login')==false)
+			return false;
 		var lgnform=Y.one('#frmlogin');
 		if(navigator.geolocation){
 			navigator.geolocation.getCurrentPosition(function(pos){
 				Y.YQL('select city,neighborhood from geo.placefinder where text="'+pos.coords.latitude+','+pos.coords.longitude+'" and gflags="R"',function(r){
 					lgnform.append(Y.Node.create('<input type="hidden" name="city" value"'+r.query.results.Result.city+'/>'));
-					lgnform.append(Y.Node.create('<input type="hidden" name="neighborhood" value"'+r.query.results.Result.neighborhood+'/>'));
+					lgnform.append(Y.Node.create('<input type="hidden" name="neighbourhood" value"'+r.query.results.Result.neighborhood+'/>'));
+					lgnform.submit();
 				});
 			},function(){
 				alert('Geolocation Error');
@@ -172,6 +180,60 @@ YUI().use('node','event','yql',function(Y){
 		//lgnform.append(Y.Node.create('<input type="hidden" name="latitu'))
 	});
 });
+
+YUI().use('node','event','yql',function(Y){
+	var btnregister=Y.one('#btnregister');
+	btnregister.on("click",function(e){
+		if(validate('register')==false)
+			return false;
+		var regform=Y.one('#frmregister');
+		if(navigator.geolocation){
+			navigator.geolocation.getCurrentPosition(function(pos){
+				Y.YQL('select city,neighborhood from geo.placefinder where text="'+pos.coords.latitude+','+pos.coords.longitude+'" and gflags="R"',function(r){
+					regform.append(Y.Node.create('<input type="hidden" name="city" value"'+r.query.results.Result.city+'/>'));
+					regform.append(Y.Node.create('<input type="hidden" name="neighborhood" value"'+r.query.results.Result.neighborhood+'/>'));
+					regform.method='POST';
+					regform.submit();
+				});
+			},function(){
+				alert('Geolocation Error');
+			});
+		}else{
+			alert('No Geolocation Object');
+		}
+
+		//lgnform.append(Y.Node.create('<input type="hidden" name="latitu'))
+	});
+});
+
+function validate(typevalid){
+	if(typevalid=='login'){
+		if(document.getElementById('lgnuser').value.length==0){
+			document.getElementById('lgnusrerr').innerHTML='Enter UserName';
+			return false;
+		}
+		if(document.getElementById('lgnpass').value.length==0){
+			document.getElementById('lgnusrerr').innerHTML='';
+			document.getElementById('lgnpasserr').innerHTML='Enter Password';
+			return false;
+		}	
+	}else{
+		if(document.getElementById('reguser').value.length==0){
+			document.getElementById('regusrerr').innerHTML='Enter UserName';
+			return false;
+		}
+		if(document.getElementById('regpass').value.length==0){
+			document.getElementById('regusrerr').innerHTML='';
+			document.getElementById('regpasserr').innerHTML='Enter Password';
+			return false;
+		}
+		if(document.getElementById('regemail').value.length==0){
+			document.getElementById('regpasserr').innerHTML='';
+			document.getElementById('regemailerr').innerHTML='Enter Email';
+			return false;
+		}	
+	}
+}
 </script>
 </body>
 </html>

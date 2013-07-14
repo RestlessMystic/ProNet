@@ -18,34 +18,42 @@ def login_user(request):
 	state = "please login into to your account"
 	if request.method == 'POST' :
 		form = LoginForm(request.POST)
-		if form.is_valid() :
-			username = form.cleaned_data['username']
-			password = form.cleaned_data['password']
+		try:
+			username = request.POST['username']
+			password = request.POST['password']
 			user = auth.authenticate(username=username,password=password)
 			if user is not None:
 				state = "Welcome"
 				auth.login(request,user)
-				return render_to_response('userprof.html',{'state':state}, context_instance=RequestContext(request)) 	
+				return HttpResponseRedirect('profile',{'state':state}) 	
 			else:
 				state = "Your are not registered.please register below"
-		else:
+		except Exception as formexe:
 			
-			state = "Your entered invalid details."
+			state = str(formexe)
 	return render_to_response('auth.html',{'state':state}, context_instance=RequestContext(request)) 		
 
 def register_user(request):
 	state = "You are not a registered user. Please register below"
 	
 	if request.method == 'POST':
+		print "passed"
 		form = RegForm(request.POST)
-		if form.is_valid() :
-			username = form.cleaned_data['username']
-			password = form.cleaned_data['password']
-			email = form.cleaned_data['email']
-			
+		try:
+			username = request.POST['username']
+			password = request.POST['password']
+			email =request.POST['email']
+			isA = request.POST['IsInterestedA']
+			isB = request.POST['IsInterestedB']
+			isC = request.POST['IsInterestedC']
+			isD = request.POST['IsInterestedD']
+			isE = request.POST['IsInterestedE']
+			isF = request.POST['IsInterestedF']
+			isG = request.POST['IsInterestedG']
+			isH = request.POST['IsInterestedH']
+			isI = request.POST['IsInterestedI']
 			try:
 				user= User.objects.create_user(username=username,password=password,email=email)
-				
 				user.save()
 				user = auth.authenticate(username=request.POST['username'],password=request.POST['password'])
 				
@@ -63,14 +71,16 @@ def register_user(request):
 					state = "The Details you provided are wrong. Please Enter your Details correctly"
 			except Exception as inst:
 				
-				state = "Username/Email already exists. Please select another username"
+				state = str(inst)
+		except Exception as formexce:
+				state = str(formexce)
 	return render_to_response('auth.html',{'state':state}, context_instance=RequestContext(request))	
 
 def forget_password(request):
 	
 	status = ""
 	if request.method == 'POST':
-		form = forgetpassword(request.POST)
+		form = forgetpassword(form.cleaned_data)
 		if form.is_valid() :
 			email = form.cleaned_data['email']
 			try:
@@ -90,3 +100,32 @@ def forget_password(request):
 				status = "Your are not a registered user.please Register first"
 	return render_to_response('forgetpassword.html',{'status':status}, context_instance=RequestContext(request))
 
+def printmyinterests(request):
+	if request.method == "GET":
+		interested = []
+		User.objects.filter(pub_date__year=2006)
+def selectinterest(request,Skill):
+	if request.method == "GET":
+		specialinterest = User.objects.filter(Skill = True)
+	return render_to_response('selectinterest.html',{'specialinterest':specialinterest}, context_instance=RequestContext(request))
+	
+def profile(request):
+	
+
+	specialinterest = ["Python","Software","Hacking","Linux","Holaa","kakaa","papaa"]
+	for x in User.objects.all():
+		try:
+			if  not (isinstance(int(x),int) and not x  == "0"):
+				print x
+				specialinterest.append(x)
+		except:
+			pass
+	return render_to_response('profile.html',{'username':"Rakesh",'interest':specialinterest}, context_instance=RequestContext(request))		
+de(request):
+	interestedusers = User.objects.get(city = User.city)
+	return render_to_response('checkround.html',{'city':city , 'neighbourhood':neighbourhood},context_instance=RequestContext(request))
+def checkedin(request):
+	form = RegForm(request.GET)
+	city = request.POST['city']
+	neighbourhood = request.POST['neighbourhood']
+	return render_to_response('profile.html',{'state':"Your Location has been shared and Your are now able to interact and make use of your time with the proffesional around you..and help others also."},context_instance=RequestContext(request,{}))
